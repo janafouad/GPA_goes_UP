@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="./frontend/src/LOGO.png" alt="GPA Goes UP Logo" width="180" />
+  <img src="src/frontend/src/LOGO.png" alt="GPA Goes UP Logo" width="180" />
 </p>
 
-<h1 align="center">GPA Goes UP 🎓</h1>
+<h1 align="center">GPA Goes 📈</h1>
 
 <p align="center">
   <strong>An AI-Powered Academic Recommendation System for University Students</strong>
@@ -402,105 +402,16 @@ The production system is split across four cloud services, each chosen for a spe
 
 ### Architecture at a Glance
 
-| Layer | Service | URL |
+| Layer | Service |
 |---|---|---|
-| **Frontend** | Vercel | [INSERT_VERCEL_URL] |
-| **Backend API** | Hugging Face Spaces | [INSERT_HF_SPACE_URL] |
-| **ML Artifact Storage** | Cloudflare R2 | *(private bucket — no public URL)* |
-| **Database** | TiDB Cloud Serverless | *(private endpoint — no public URL)* |
+| **Frontend** | Vercel |
+| **Backend API** | Hugging Face Spaces |
+| **ML Artifact Storage** | Cloudflare R2 |
+| **Database** | TiDB Cloud Serverless |
 
 ---
 
-### 🔷 Frontend — Vercel
-
-The React + Vite SPA is deployed on **Vercel** using its native Git integration.
-
-- Every push to `main` triggers an automatic production build and deployment.
-- Every pull request gets its own **preview deployment URL** for isolated testing.
-- Vercel's global CDN serves static assets from the edge, minimizing latency worldwide.
-- The [`vercel.json`](src/frontend/vercel.json) config rewrites all routes to `index.html` to support React Router's client-side navigation.
-
-**Key config (`vercel.json`):**
-```json
-{
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
-}
-```
-
-**Relevant environment variable to set in the Vercel dashboard:**
-
-| Variable | Value |
-|---|---|
-| `VITE_API_BASE_URL` | Your Hugging Face Space backend URL |
-
----
-
-### 🤗 Backend — Hugging Face Spaces
-
-The Flask backend runs as a **Hugging Face Space** (Docker or Python SDK runtime).
-
-- Hugging Face provides a persistent container process — the APScheduler background job (TTL cleanup) runs continuously without any extra infrastructure.
-- The Space exposes the Flask app on the default HTTPS port; Vercel's frontend calls it directly.
-- On cold start, the backend downloads the latest trained model artifact from Cloudflare R2 into the container's local filesystem, so inference is immediately available.
-- The `FLASK_ENV` environment variable is set to `production` in the Space settings to disable dev-only routes.
-
-**Environment variables to configure in the Space settings:**
-
-| Variable | Notes |
-|---|---|
-| `FLASK_SECRET_KEY` | Strong random string for session signing |
-| `FLASK_ENV` | `production` |
-| `DB_HOST` | TiDB Cloud host |
-| `DB_PORT` | `4000` (TiDB Cloud default) |
-| `DB_USER` / `DB_PASSWORD` / `DB_NAME` | TiDB credentials |
-| `DB_SSL` | `true` |
-| `FRONTEND_ORIGIN` | Your Vercel deployment URL (for CORS) |
-| `GEMINI_API_KEY` | Google Gemini API key |
-| `R2_ENDPOINT_URL` | Cloudflare R2 S3-compatible endpoint |
-| `R2_ACCESS_KEY_ID` / `R2_SECRET_ACCESS_KEY` | R2 API token pair |
-| `R2_BUCKET_NAME` | Name of your R2 bucket |
-
----
-
-### 🟠 ML Artifact Storage — Cloudflare R2
-
-Trained model files (`.pkl`) are stored in a **Cloudflare R2** bucket.
-
-- R2 is S3-compatible, so the backend uses `boto3` with a custom endpoint URL — no vendor lock-in.
-- **Zero egress fees**: reading model artifacts from R2 into the Hugging Face container costs nothing, unlike AWS S3.
-- On each admin retrain (`POST /api/admin/retrain`), the freshly trained model is automatically uploaded to R2 and becomes immediately available to all running instances.
-- In local development, if R2 credentials are not configured, the backend transparently falls back to the local `src/backend/ml/models/` directory.
-
-**R2 bucket access pattern:**
-
-```
-Upload (after retrain)  →  R2 bucket  →  Download (on container cold start)
-                                      →  Local cache (in-memory / filesystem)
-                                      →  Inference requests served from cache
-```
-
----
-
-### 🔴 Database — TiDB Cloud Serverless
-
-All operational data (student sessions, course catalog, enrollment history) is stored in **TiDB Cloud Serverless** — a fully managed, MySQL-compatible database.
-
-- TiDB Cloud uses port **4000** by default (set `DB_PORT=4000`).
-- SSL is enforced for all connections in production (`DB_SSL=true`).
-- The serverless tier scales to zero when idle, keeping costs minimal for academic usage patterns.
-- The schema is defined in [`src/backend/data/schema/creation_code.sql`](src/backend/data/schema/creation_code.sql) — run it once against your TiDB cluster to initialize the tables.
-
-**Initialize the production schema:**
-```bash
-mysql --host <TIDB_HOST> --port 4000 --user <USER> --password --ssl-mode=REQUIRED \
-      gpa_goes < src/backend/data/schema/creation_code.sql
-```
-
-> **Note:** TiDB Cloud is fully wire-compatible with MySQL 8.0. No application code changes are needed compared to running against a local MySQL server.
-
----
-
-This project was built by a dedicated team from the **Faculty of Science, Ain Shams University**.
+built by a dedicated team from the **Faculty of Science, Ain Shams University - Statistics & Computer Science**.
 
 <table>
   <thead>
@@ -519,13 +430,8 @@ This project was built by a dedicated team from the **Faculty of Science, Ain Sh
       <td>Statistics & Computer Science</td>
     </tr>
     <tr>
-      <td>Shahd Mostafa</td>
+      <td>Shahd Mostafa Hanafy</td>
       <td>Statistics & Computer Science</td>
-    </tr>
-    <tr>
-      <td>[Insert Team Member Name]</td>
-      <td>[Insert Department]</td>
-      <td>[Insert Role]</td>
     </tr>
   </tbody>
 </table>
@@ -539,5 +445,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ---
 
 <p align="center">
-  Made with ❤️ by the GPA Goes UP Team &nbsp;|&nbsp; Faculty of Science, Ain Shams University
+  Made by the GPA Goes 📈 Team &nbsp;|&nbsp; Faculty of Science, Ain Shams University - Statistics & Computer Science
 </p>
