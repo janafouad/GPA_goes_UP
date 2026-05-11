@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="path/to/logo.png" alt="GPA Goes UP Logo" width="180" />
+  <img src="./frontend/src/LOGO.png" alt="GPA Goes UP Logo" width="180" />
 </p>
 
 <h1 align="center">GPA Goes UP 🎓</h1>
@@ -507,29 +507,20 @@ This project was built by a dedicated team from the **Faculty of Science, Ain Sh
     <tr>
       <th>Name</th>
       <th>Department / Major</th>
-      <th>Role</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Mariam Ehab Mostafa</strong></td>
-      <td>Faculty of Science, Ain Shams University — Statistics & Computer Science</td>
-      <td>[Insert Role]</td>
+      <td>Statistics & Computer Science</td>
     </tr>
     <tr>
-      <td>[Insert Team Member Name]</td>
-      <td>[Insert Department]</td>
-      <td>[Insert Role]</td>
+      <td>Jana fouad Abdel moneam</td>
+      <td>Statistics & Computer Science</td>
     </tr>
     <tr>
-      <td>[Insert Team Member Name]</td>
-      <td>[Insert Department]</td>
-      <td>[Insert Role]</td>
-    </tr>
-    <tr>
-      <td>[Insert Team Member Name]</td>
-      <td>[Insert Department]</td>
-      <td>[Insert Role]</td>
+      <td>Shahd Mostafa</td>
+      <td>Statistics & Computer Science</td>
     </tr>
     <tr>
       <td>[Insert Team Member Name]</td>
@@ -538,20 +529,6 @@ This project was built by a dedicated team from the **Faculty of Science, Ain Sh
     </tr>
   </tbody>
 </table>
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 
