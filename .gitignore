@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Environment
+.env
+.env.*
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Compiled assets
+*.pyc
+node_modules
+
+# ML runtime artifacts (generated at runtime, not source)
+backend/ml/models/*.pkl
+backend/ml/models/*.lock
+backend/ml/models/training_state.json
+
+# Temp upload folder created by Flask
+backend/uploads/
+
+# Frontend build output
+frontend/dist/
